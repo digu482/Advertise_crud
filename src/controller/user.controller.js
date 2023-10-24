@@ -172,17 +172,9 @@ exports.create = async (req, res) => {
         } else {
           // Send an email to the admin
           try {
-            const transporter = nodemailer.createTransport({
-              host: "sandbox.smtp.mailtrap.io",
-              port: 2525,
-              auth: {
-                user: "69cf0fab16b53b",
-                pass: "fe2ce7a0c7de5e",
-              },
-            });
 
             const mailOptions = {
-              from: "69cf0fab16b53b",
+              from: "user",
               to: email,
               subject: "New User Registration",
               text: `A new user has registered:\nName: ${Name}\nEmail: ${email}\nCompany: ${company}`,
@@ -500,17 +492,8 @@ exports.forgotpassword = async (req, res) => {
         await user.save();
       }
 
-      const transporter = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
-        auth: {
-          user: "69cf0fab16b53b",
-          pass: "fe2ce7a0c7de5e",
-        },
-      });
-
       const mailOptions = {
-        from: "69cf0fab16b53b",
+        from: "user",
         to: email,
         subject: "Reset Password",
         text: `Your OTP for password reset is: ${otp}`,
@@ -574,7 +557,6 @@ exports.verifyOTP = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log("Error verifying OTP:", error);
     return res.status(500).json({
       status: 500,
       message: msg.ERROROTP,
@@ -630,7 +612,6 @@ exports.Resetpassword = async (req, res) => {
         }
       }
     } catch (error) {
-      console.log("Error resetting password:", error);
       return res.status(500).json({
         status: 500,
         message: msg.INTERROR,
@@ -646,7 +627,7 @@ exports.CreateOrUpdate = async (req, res) => {
   try {
     let { Name, email, company, password } = req.body;
     let _id = req.params.id;
-
+  //update user
     if (_id) {
       let user = await User.findById(_id);
       if (!user) {
@@ -759,17 +740,8 @@ exports.CreateOrUpdate = async (req, res) => {
           } else {
             // Send an email to the admin
             try {
-              const transporter = nodemailer.createTransport({
-                host: "sandbox.smtp.mailtrap.io",
-                port: 2525,
-                auth: {
-                  user: "69cf0fab16b53b",
-                  pass: "fe2ce7a0c7de5e",
-                },
-              });
-
               const mailOptions = {
-                from: "69cf0fab16b53b",
+                from: "user",
                 to: email,
                 subject: "New User Registration",
                 text: `A new user has registered:\nName: ${Name}\nEmail: ${email}\nCompany: ${company}`,
@@ -799,11 +771,9 @@ exports.CreateOrUpdate = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error("Internal Server Error:", error);
     return res.status(500).json({
       status: 500,
-      message: msg.ERROR,
-      error: error.message,
+      message: msg.ERROR
     });
   }
 };

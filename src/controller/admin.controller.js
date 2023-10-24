@@ -7,17 +7,8 @@ const { passwordvalidation } = require("../services/commonservices");
 const { NameValidation } = require("../services/commonservices");
 const { EmailValidation } = require("../services/commonservices");
 const msg = require("../utils/ResponseMessage.json");
-// const transporter = require("../config/email.config");
+const transporter = require("../config/email.config");
 const nodemailer = require("nodemailer");
-
-const transporter = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "69cf0fab16b53b",
-    pass: "fe2ce7a0c7de5e",
-  },
-});
 
 
 
@@ -140,6 +131,8 @@ exports.Admincreate = async (req, res) => {
 // };
 
 
+
+
 exports.adminApproveOrReject = async (req, res) => {
   try {
     const { _id, Request } = req.body;
@@ -158,8 +151,8 @@ exports.adminApproveOrReject = async (req, res) => {
 
       // Send an approval email to the user
       const approvalEmailOptions = {
-        from: user.email,
-        to:user.email,
+        from: "user",
+        to:"user",
         subject: 'Approval Notification',
         text: 'Your account has been approved!',
       };
@@ -182,8 +175,8 @@ exports.adminApproveOrReject = async (req, res) => {
 
       // Send a rejection email to the user
       const rejectionEmailOptions = {
-        from: user.email,
-        to: user.email,
+        from: "user",
+        to: "user",
         subject: 'Rejection Notification',
         text: 'Your account has been rejected.',
       };
